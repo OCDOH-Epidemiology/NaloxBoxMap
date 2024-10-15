@@ -1,0 +1,162 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.marker img {
+  display: block;
+}
+
+.marker {
+  background-image: url("mapbox-icon.png");
+  background-size: cover;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.mapboxgl-popup {
+  background-color: #fff;
+  border-radius: 10px;
+  font-family: "Montserrat", sans-serif;
+  color: #333;
+  font-size: 14px;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+  width: 300px;
+  height: fit-content;
+}
+
+.mapboxgl-popup-tip {
+  border-top-color: #fff;
+  align-self: center !important;
+  border: none !important;
+}
+
+.mapboxgl-popup-content {
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  margin: 3px;
+  box-shadow: none !important;
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.mapboxgl-popup-content::-webkit-scrollbar {
+  width: 12px;
+  background-color: #dddbdb;
+  border-radius: 10px;
+}
+
+.mapboxgl-popup-content::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #dddbdb;
+  border-radius: 10px;
+}
+
+.mapboxgl-popup-content::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #4285f4;
+}
+
+.mapboxgl-popup-close-button {
+  color: #666;
+  font-size: 1rem;
+  font-weight: 600;
+  right: 20px;
+  top: 5px;
+}
+
+.directions-button {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(66, 133, 244, 0.5);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.directions-button:hover {
+  background-color: #357ae8;
+  box-shadow: 0 4px 8px rgba(66, 133, 244, 0.7);
+}
+
+#toggle-notes-button {
+  position: absolute;
+  top: 7%; /* Adjust based on the search bar's height and margin */
+  left: 10px;
+  padding: 3px;
+  cursor: pointer;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(66, 133, 244, 0.5);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+#notes-box {
+  position: absolute;
+  top: 60px; /* Adjust based on the search bar's height and margin */
+  left: 10px;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 250px; /* Adjust based on desired width */
+  z-index: 1; /* Ensure it appears above the map */
+  display: none; /* Initially hidden */
+}
+
+#notes-box h3 {
+  margin-top: 0;
+}
+
+.close-button {
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  color: #666;
+}
+
+/* Add these styles to your style.css */
+
+.popup-subheading {
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: bolder;
+  margin: 8px 0;
+  color: black;
+  text-decoration: underline;
+}
