@@ -75,11 +75,19 @@
       const geolocateControl = new mapboxgl.GeolocateControl({
         positionOptions: {
           enableHighAccuracy: true,
+          timeout: 10000 // 10-second timeout for geolocation
         },
         trackUserLocation: false,
+        showUserLocation: true
       });
 
       map.addControl(geolocateControl);
+
+      // Handle geolocation errors
+      geolocateControl.on('error', function(error) {
+        console.error("Geolocation error: ", error.message);
+        alert("Unable to retrieve your location. Please check your location settings.");
+      });
 
       map.on("load", function () {
         fetch("Extended_GeoJSON_Locations.geojson")
@@ -137,7 +145,16 @@
             lng: destination[0],
           });
         });
-        geolocateControl.trigger();
+        
+        // Trigger geolocation and handle failure with a default location (Goshen)
+        if (!geolocateControl.trigger()) {
+          console.warn("Geolocation failed. Defaulting to Goshen.");
+          // Default to Goshen coordinates
+          openGoogleMaps({ lat: 41.4026, lng: -74.3231 }, {
+            lat: destination[1],
+            lng: destination[0],
+          });
+        }
       }
 
       document
