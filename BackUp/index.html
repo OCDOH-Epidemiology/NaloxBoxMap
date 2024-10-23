@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Nalox Box Locations</title>
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css"
+      type="text/css"
+    />
+  </head>
+
+  <body>
+    <div id="map"></div>
+    <button id="toggle-notes-button">Information</button>
+    <div id="notes-box">
+      <button id="close-notes-button" class="close-button">&times;</button>
+      <h3>How to Use the Map</h3>
+      <h4>Search Bar Function:</h4>
+      <ul>
+        <li>Type in an address or a zip code.</li>
+        <li>Next zoom out and find the nearest Naloxbox to your location.</li>
+      </ul>
+      <h4>Share Location Function:</h4>
+      <ul>
+        <li>
+          In the top right corner click on the icon to share your location.
+        </li>
+        <li>Next zoom out and find the nearest Naloxbox to your location.</li>
+      </ul>
+      <h4>
+        <a href="https://forms.office.com/g/rFu7vQgLnP" target="_blank"
+          >Feedback Survey</a
+        >
+      </h4>
+    </div>
+
+    <script>
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoiZGNyYW5kZWxsIiwiYSI6ImNsdWs2bmF2ZTBuOWYycG51dzZuMTloNHkifQ.k9Jy_jqxEDlu0Um7_3YusA";
+
+      const map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/mapbox/standard",
+        center: [-74.3118, 41.3919],
+        zoom: 10,
+        scrollZoom: true,
+      });
+
+      map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
+
+      map.addControl(
+        new MapboxGeocoder({
+          accessToken: mapboxgl.accessToken,
+          mapboxgl: mapboxgl,
+        }),
+        "top-left"
+      );
+
+      const geolocateControl = new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true,
+          timeout: 10000 // 10-second timeout for geolocation
+        },
+        trackUserLocation: false,
+        showUserLocation: true
+      });
+
+      map.addControl(geolocateControl);
+
+      // Handle geolocation errors
+      geolocateControl.on('error', function(error) {
+        console.error("Geolocation error: ", error.message);
+        alert("Unable to retrieve your location. Please check your location settings.");
+      });
+
+      map.on("load", function () {
+        fetch("Extended_GeoJSON_Locations.geojson")
+          .then((response) => response.json())
+          .then((data) => {
+            data.features.forEach((feature) => {
+              const el = document.createElement("div");
+              el.className = "marker";
+
+              const img = document.createElement("img");
+              img.src = "mapbox-icon.png";
+
+              img.style.width = "1px"; // Set the desired width
+              img.style.height = "1px"; // Set the desired height
+              el.appendChild(img);
+
+              new mapboxgl.Marker(el)
+                .setLngLat(feature.geometry.coordinates)
+                .setPopup(
+                  new mapboxgl.Popup({
+                    offset: 25,
+                    closeOnMove: true,
+                    maxWidth: "600px",
+                    closeButton: false,
+                  }).setHTML(
+                    `<h3>${feature.properties.name}</h3>
+                                <p class="popup-subheading">Address</p>
+                                <p>${feature.properties.address}</p>
+                                <button class="directions-button" onclick="getDirections([${feature.geometry.coordinates}])">Get Directions</button>
+                                <p class="popup-subheading">Narcan Location</p>
+                                <p>${feature.properties.narcanlocation}</p>
+                                <p class="popup-subheading">Hours</p>
+                                <p>${feature.properties.hours}</p>`
+                  )
+                )
+                .addTo(map);
+            });
+          })
+          .catch((error) => console.error("Error:", error));
+      });
+
+      function openGoogleMaps(start, end) {
+        const url = `https://www.google.com/maps/dir/?api=1&origin=${start.lat},${start.lng}&destination=${end.lat},${end.lng}&travelmode=driving`;
+        window.open(url, "_blank");
+      }
+
+      function getDirections(destination) {
+        geolocateControl.once("geolocate", function (e) {
+          const startPoint = {
+            lat: e.coords.latitude,
+            lng: e.coords.longitude,
+          };
+          openGoogleMaps(startPoint, {
+            lat: destination[1],
+            lng: destination[0],
+          });
+        });
+        
+        // Trigger geolocation and handle failure with a default location (Goshen)
+        if (!geolocateControl.trigger()) {
+          console.warn("Geolocation failed. Defaulting to Goshen.");
+          // Default to Goshen coordinates
+          openGoogleMaps({ lat: 41.4026, lng: -74.3231 }, {
+            lat: destination[1],
+            lng: destination[0],
+          });
+        }
+      }
+
+      document
+        .getElementById("toggle-notes-button")
+        .addEventListener("click", function () {
+          var notesBox = document.getElementById("notes-box");
+          if (
+            notesBox.style.display === "none" ||
+            notesBox.style.display === ""
+          ) {
+            notesBox.style.display = "block";
+          } else {
+            notesBox.style.display = "none";
+          }
+        });
+
+      document
+        .getElementById("close-notes-button")
+        .addEventListener("click", function () {
+          document.getElementById("notes-box").style.display = "none";
+        });
+    </script>
+  </body>
+</html>
