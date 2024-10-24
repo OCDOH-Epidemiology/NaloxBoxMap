@@ -12,6 +12,12 @@ body {
   top: 0;
   bottom: 0;
   width: 100%;
+  height: 100vh;
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
 }
 
 .marker img {
@@ -159,4 +165,27 @@ body {
   margin: 8px 0;
   color: black;
   text-decoration: underline;
+}
+
+.out-of-stock-button {
+  background-color: #f44336; /* Red color for the out of stock button */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(244, 67, 54, 0.5);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.out-of-stock-button:hover {
+  background-color: #d32f2f;
+  box-shadow: 0 4px 8px rgba(244, 67, 54, 0.7);
 }

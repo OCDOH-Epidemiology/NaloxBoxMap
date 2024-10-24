@@ -23,6 +23,7 @@
       href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css"
       type="text/css"
     />
+    <style></style>
   </head>
 
   <body>
@@ -43,6 +44,13 @@
         </li>
         <li>Next zoom out and find the nearest Naloxbox to your location.</li>
       </ul>
+      <h4>Out of Stock Button:</h4>
+      <ul>
+        <li>
+          If a Naloxbox is out of stock please use the "Out of Stock" button to
+          notify our team and we will make sure it is replenished.
+        </li>
+      </ul>
       <h4>
         <a href="https://forms.office.com/g/rFu7vQgLnP" target="_blank"
           >Feedback Survey</a
@@ -50,13 +58,24 @@
       </h4>
     </div>
 
+    <form
+      id="outOfStockForm"
+      action="https://formspree.io/f/mdkokbew"
+      method="POST"
+      target="_blank"
+      style="display: none"
+    >
+      <input type="hidden" name="message" id="form-location" />
+      <input type="hidden" name="_subject" value="Out of Stock Alert" />
+    </form>
+
     <script>
       mapboxgl.accessToken =
         "pk.eyJ1IjoiZGNyYW5kZWxsIiwiYSI6ImNsdWs2bmF2ZTBuOWYycG51dzZuMTloNHkifQ.k9Jy_jqxEDlu0Um7_3YusA";
 
       const map = new mapboxgl.Map({
         container: "map",
-        style: "mapbox://styles/mapbox/standard",
+        style: "mapbox://styles/mapbox/streets-v11",
         center: [-74.3118, 41.3919],
         zoom: 10,
         scrollZoom: true,
@@ -75,18 +94,20 @@
       const geolocateControl = new mapboxgl.GeolocateControl({
         positionOptions: {
           enableHighAccuracy: true,
-          timeout: 10000 // 10-second timeout for geolocation
+          timeout: 10000, // 10-second timeout for geolocation
         },
         trackUserLocation: false,
-        showUserLocation: true
+        showUserLocation: true,
       });
 
       map.addControl(geolocateControl);
 
       // Handle geolocation errors
-      geolocateControl.on('error', function(error) {
+      geolocateControl.on("error", function (error) {
         console.error("Geolocation error: ", error.message);
-        alert("Unable to retrieve your location. Please check your location settings.");
+        alert(
+          "Unable to retrieve your location. Please check your location settings."
+        );
       });
 
       map.on("load", function () {
@@ -118,6 +139,7 @@
                                 <p class="popup-subheading">Address</p>
                                 <p>${feature.properties.address}</p>
                                 <button class="directions-button" onclick="getDirections([${feature.geometry.coordinates}])">Get Directions</button>
+                                <button class="out-of-stock-button" onclick="reportOutOfStock('${feature.properties.name}')">Out of Stock</button>
                                 <p class="popup-subheading">Narcan Location</p>
                                 <p>${feature.properties.narcanlocation}</p>
                                 <p class="popup-subheading">Hours</p>
@@ -141,8 +163,8 @@
           type: "line",
           source: "orange-county-border",
           paint: {
-            "line-color": "#FF0000", // Red color for the border outline
-            "line-width": 3,
+            "line-color": "#808080", // Red color for the border outline
+            "line-width": 2,
           },
         });
 
@@ -153,7 +175,7 @@
           source: "orange-county-border",
           paint: {
             "fill-color": "#FF0000", // Red color for the fill
-            "fill-opacity": 0.050, // Adjust the opacity as needed
+            "fill-opacity": 0.05, // Adjust the opacity as needed
           },
         });
       });
@@ -174,16 +196,27 @@
             lng: destination[0],
           });
         });
-        
+
         // Trigger geolocation and handle failure with a default location (Goshen)
         if (!geolocateControl.trigger()) {
           console.warn("Geolocation failed. Defaulting to Goshen.");
           // Default to Goshen coordinates
-          openGoogleMaps({ lat: 41.4026, lng: -74.3231 }, {
-            lat: destination[1],
-            lng: destination[0],
-          });
+          openGoogleMaps(
+            { lat: 41.4026, lng: -74.3231 },
+            {
+              lat: destination[1],
+              lng: destination[0],
+            }
+          );
         }
+      }
+
+      function reportOutOfStock(locationName) {
+        document.getElementById(
+          "form-location"
+        ).value = `The Naloxbox at ${locationName} is reported as out of stock.`;
+        document.getElementById("outOfStockForm").submit();
+        alert("Out of Stock report sent successfully.");
       }
 
       document

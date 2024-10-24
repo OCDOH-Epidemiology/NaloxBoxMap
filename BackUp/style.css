@@ -150,3 +150,13 @@ body {
   color: #666;
 }
 
+/* Add these styles to your style.css */
+
+.popup-subheading {
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: bolder;
+  margin: 8px 0;
+  color: black;
+  text-decoration: underline;
+}

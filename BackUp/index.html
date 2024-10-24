@@ -90,6 +90,7 @@
       });
 
       map.on("load", function () {
+        // Load Nalox Box locations
         fetch("Extended_GeoJSON_Locations.geojson")
           .then((response) => response.json())
           .then((data) => {
@@ -127,6 +128,34 @@
             });
           })
           .catch((error) => console.error("Error:", error));
+
+        // Adding Orange County Border Layer
+        map.addSource("orange-county-border", {
+          type: "geojson",
+          data: "Orange_County_Border.geojson",
+        });
+
+        // Add border outline
+        map.addLayer({
+          id: "orange-county-border-layer",
+          type: "line",
+          source: "orange-county-border",
+          paint: {
+            "line-color": "#FF0000", // Red color for the border outline
+            "line-width": 3,
+          },
+        });
+
+        // Add fill to the border with opacity
+        map.addLayer({
+          id: "orange-county-border-fill",
+          type: "fill",
+          source: "orange-county-border",
+          paint: {
+            "fill-color": "#FF0000", // Red color for the fill
+            "fill-opacity": 0.050, // Adjust the opacity as needed
+          },
+        });
       });
 
       function openGoogleMaps(start, end) {
