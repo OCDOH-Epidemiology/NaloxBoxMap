@@ -44,10 +44,10 @@
         </li>
         <li>Next zoom out and find the nearest Naloxbox to your location.</li>
       </ul>
-      <h4>Out of Stock Button:</h4>
+      <h4>Restock Button:</h4>
       <ul>
         <li>
-          If a Naloxbox is out of stock please use the "Out of Stock" button to
+          If a Naloxbox is out of stock please use the "Notify to Restock" button to
           notify our team and we will make sure it is replenished.
         </li>
       </ul>
@@ -139,11 +139,13 @@
                                 <p class="popup-subheading">Address</p>
                                 <p>${feature.properties.address}</p>
                                 <button class="directions-button" onclick="getDirections([${feature.geometry.coordinates}])">Get Directions</button>
-                                <button class="out-of-stock-button" onclick="reportOutOfStock('${feature.properties.name}')">Out of Stock</button>
                                 <p class="popup-subheading">Narcan Location</p>
                                 <p>${feature.properties.narcanlocation}</p>
                                 <p class="popup-subheading">Hours</p>
-                                <p>${feature.properties.hours}</p>`
+                                <p>${feature.properties.hours}</p>
+                                <p class="popup-subheading">Restock</p>
+                                <button class="out-of-stock-button" onclick="reportOutOfStock('${feature.properties.name}')">Notify to Restock</button>`
+                                
                   )
                 )
                 .addTo(map);
