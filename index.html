@@ -2,226 +2,175 @@
 <html>
 
 <head>
-  <meta charset="utf-8" />
-  <title>Nalox Box Locations</title>
-  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
-  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
-  <script
-    src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
-  <link rel="stylesheet"
-    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css"
-    type="text/css" />
-  <style></style>
+    <meta charset="utf-8" />
+    <title>NaloxBox Locations</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css"
+        type="text/css" />
+
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+
 </head>
 
 <body>
-  <div id="map"></div>
-  <button id="toggle-notes-button">Information</button>
-  <div id="notes-box">
-    <button id="close-notes-button" class="close-button">&times;</button>
-    <h3>How to Use the Map</h3>
-    <h4>Search Bar Function:</h4>
-    <ul>
-      <li>Type in an address or a zip code.</li>
-      <li>Next zoom out and find the nearest Naloxbox to your location.</li>
-    </ul>
-    <h4>Share Location Function:</h4>
-    <ul>
-      <li>
-        In the top right corner click on the icon to share your location.
-      </li>
-      <li>Next zoom out and find the nearest Naloxbox to your location.</li>
-    </ul>
-    <h4>Restock Button:</h4>
-    <ul>
-      <li>
-        If a Naloxbox is out of stock please use the "Notify to Restock"
-        button to notify our team and we will make sure it is replenished.
-      </li>
-    </ul>
-    <h4>
-      <a href="https://forms.office.com/g/rFu7vQgLnP" target="_blank">Feedback Survey</a>
-    </h4>
-  </div>
+    <div id="map"></div>
 
-  <form id="outOfStockForm" action="https://formspree.io/f/mdkokbew" method="POST" target="_blank"
-    style="display: none">
-    <input type="hidden" name="message" id="form-location" />
-    <input type="hidden" name="_subject" value="Out of Stock Alert" />
-  </form>
+    <div id="legend">
+        <h4>Map Legend</h4>
+        <div>
+            <input type="checkbox" id="naloxbox-checkbox" checked>
+            <label for="naloxbox-checkbox">
+                <lord-icon src="https://cdn.lordicon.com/bpmglzll.json" trigger="hover" colors="primary:#e83a30"
+                    style="width:20px;height:20px">
+                </lord-icon>
+                Naloxboxes
+            </label>
+        </div>
+        <div>
+            <input type="checkbox" id="oppp-checkbox" checked>
+            <label for="oppp-checkbox">
+                <lord-icon src="https://cdn.lordicon.com/daeumrty.json" trigger="hover" state="hover-wave"
+                    colors="primary:#f9c9c0,secondary:#ebe6ef,tertiary:#000000,quaternary:#b26836"
+                    style="width:20px;height:20px">
+                </lord-icon>
+                </lord-icon>
+                OOPP
+            </label>
+        </div>
+    </div>
 
-  <script>
-    mapboxgl.accessToken =
-      "pk.eyJ1IjoiZGNyYW5kZWxsIiwiYSI6ImNsdWs2bmF2ZTBuOWYycG51dzZuMTloNHkifQ.k9Jy_jqxEDlu0Um7_3YusA";
 
-    const map = new mapboxgl.Map({
-      container: "map",
-      style: "mapbox://styles/mapbox/streets-v11",
-      center: [-74.3118, 41.3919],
-      zoom: 10,
-      scrollZoom: true,
-    });
+    <!-- Information Button -->
+    <button id="toggle-notes-button" class="modern-button">
+        Information
+    </button>
+    <div id="notes-box" class="modern-modal" style="display:none;">
+        <div class="modal-content">
+            <button id="close-notes-button" class="close-button">&times;</button>
+            <div class="modal-header">
+                <h3>How to Use the Map</h3>
+            </div>
+            <div class="modal-body">
+                <div class="info-section">
+                    <div class="info-icon">
+                        <lord-icon src="https://cdn.lordicon.com/lyrrgrcb.json" trigger="hover" colors="primary:#e83a30" style="width:32px;height:32px"></lord-icon>
+                    </div>
+                    <div class="info-content">
+                        <h4>Search Bar Function</h4>
+                        <ul>
+                            <li>Type in an address or a zip code.</li>
+                            <li>Zoom out and find the nearest Naloxbox.</li>
+                        </ul>
+                    </div>
+                </div>
 
-    map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
+                <div class="info-section">
+                    <div class="info-icon">
+                        <lord-icon src="https://cdn.lordicon.com/lyrrgrcb.json" trigger="hover" colors="primary:#e83a30" style="width:32px;height:32px"></lord-icon>
+                    </div>
+                    <div class="info-content">
+                        <h4>Share Location Function</h4>
+                        <ul>
+                            <li>Click on the location icon at the top right to share your location.</li>
+                            <li>Then zoom out and find the nearest Naloxbox.</li>
+                        </ul>
+                    </div>
+                </div>
 
-    map.addControl(
-      new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken,
-        mapboxgl: mapboxgl,
-      }),
-      "top-left"
-    );
+                <div class="info-section">
+                    <div class="info-icon">
+                        <lord-icon src="https://cdn.lordicon.com/lyrrgrcb.json" trigger="hover" colors="primary:#e83a30" style="width:32px;height:32px"></lord-icon>
+                    </div>
+                    <div class="info-content">
+                        <h4>Restock Button</h4>
+                        <ul>
+                            <li>If a Naloxbox is out of stock, click the "Notify to Restock" button to notify our team.</li>
+                        </ul>
+                    </div>
+                </div>
 
-    const geolocateControl = new mapboxgl.GeolocateControl({
-      positionOptions: {
-        enableHighAccuracy: true,
-        timeout: 10000, // 10-second timeout for geolocation
-      },
-      trackUserLocation: false,
-      showUserLocation: true,
-    });
+                <div class="feedback-section">
+                    <h4><a href="https://forms.office.com/g/rFu7vQgLnP" target="_blank" class="feedback-link">
+                    Take our Feedback Survey
+                    </a></h4>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    map.addControl(geolocateControl);
+    <!-- OOPP Button -->
+    <button id="toggle-oopp-button" class="modern-button">
+        OOPP
+    </button>
+    <div id="oopp-box" class="modern-modal" style="display:none;">
+        <div class="modal-content">
+            <button id="close-oopp-button" class="close-button">&times;</button>
+            <div class="modal-header">
+                <h3>Opioid Overdose Prevention Program (OOPP)</h3>
+            </div>
+            <div class="modal-body">
+                <div class="info-section">
+                    <div class="info-icon">
+                        <lord-icon src="https://cdn.lordicon.com/daeumrty.json" trigger="hover" state="hover-wave" colors="primary:#f9c9c0" style="width:32px;height:32px"></lord-icon>
+                    </div>
+                    <div class="info-content">
+                        <h4>What is the Opioid Overdose Prevention Program (OOPP)?</h4>
+                        <p>An Opioid Overdose Prevention Program (OOPP) is an initiative authorized at the state level and implemented locally to reduce fatalities from opioid overdoses.</p>
+                    </div>
+                </div>
+                <div class="feedback-section">
+                    <h4><a href="https://www.orangecountygov.com/2630/23757/Opioid-Overdose-Prevention-Program-OOPP" target="_blank" class="feedback-link">
+                        Learn More About OOPP
+                    </a></h4>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    // Handle geolocation errors
-    geolocateControl.on("error", function (error) {
-      console.error("Geolocation error: ", error.message);
-      alert(
-        "Unable to retrieve your location. Please check your location settings."
-      );
-    });
+    <!-- Naloxbox Button -->
+    <button id="toggle-additional-notes-button" class="modern-button">
+        Naloxone (Narcan)
+    </button>
+    <div id="additional-notes-box" class="modern-modal" style="display:none;">
+        <div class="modal-content">
+            <button id="close-additional-notes-button" class="close-button">&times;</button>
+            <div class="modal-header">
+                <h3>What is Naloxone (Narcan)?</h3>
+            </div>
+            <div class="modal-body">
+                <div class="info-section">
+                    <div class="info-icon">
+                        <lord-icon src="https://cdn.lordicon.com/bpmglzll.json" trigger="hover" colors="primary:#e83a30" style="width:32px;height:32px"></lord-icon>
+                    </div>
+                    <div class="info-content">
+                        <h4>About Naloxone (Narcan)</h4>
+                        <p>Naloxone is a life-saving medication designed to rapidly reverse opioid overdose.</p>
+                        <ul>
+                            <li>Administer one spray into one nostril of the person experiencing an overdose.</li>
+                            <li>It begins working within 2–3 minutes.</li>
+                            <li>If there is no response, repeat every 2–3 minutes and call 911 immediately.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="feedback-section">
+                    <h4><a href="https://www.orangecountygov.com/2631/23761/Naloxone-Narcan" target="_blank" class="feedback-link">
+                        Learn More About Naloxone (Narcan)
+                    </a></h4>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    map.on("load", function () {
-      // Load Nalox Box locations
-      fetch("Extended_GeoJSON_Locations.geojson")
-        .then((response) => response.json())
-        .then((data) => {
-          data.features.forEach((feature) => {
-            const el = document.createElement("div");
-            el.className = "marker";
 
-            const img = document.createElement("img");
-            img.src = "mapbox-icon.png";
-
-            img.style.width = "1px"; // Set the desired width
-            img.style.height = "1px"; // Set the desired height
-            el.appendChild(img);
-
-            new mapboxgl.Marker(el)
-              .setLngLat(feature.geometry.coordinates)
-              .setPopup(
-                new mapboxgl.Popup({
-                  offset: 25,
-                  closeOnMove: true,
-                  maxWidth: "600px",
-                  closeButton: false,
-                }).setHTML(
-                  `<h3>${feature.properties.name}</h3>
-     <p class="popup-subheading">Address</p>
-     <p>${feature.properties.address}</p>
-     <button class="directions-button" onclick="getDirections([${feature.geometry.coordinates}], '${feature.properties.address}')">Get Directions</button>
-     <p class="popup-subheading">Narcan Location</p>
-     <p>${feature.properties.narcanlocation}</p>
-     <p class="popup-subheading">Hours</p>
-     <p>${feature.properties.hours}</p>
-     <p class="popup-subheading">Restock</p>
-     <button class="out-of-stock-button" onclick="reportOutOfStock('${feature.properties.name}')">Notify to Restock</button>`
-                )
-              )
-              .addTo(map);
-          });
-        })
-        .catch((error) => console.error("Error:", error));
-
-      // Adding Orange County Border Layer
-      map.addSource("orange-county-border", {
-        type: "geojson",
-        data: "Orange_County_Border.geojson",
-      });
-
-      // Add border outline
-      map.addLayer({
-        id: "orange-county-border-layer",
-        type: "line",
-        source: "orange-county-border",
-        paint: {
-          "line-color": "#808080", // Red color for the border outline
-          "line-width": 2,
-        },
-      });
-
-      // Add fill to the border with opacity
-      map.addLayer({
-        id: "orange-county-border-fill",
-        type: "fill",
-        source: "orange-county-border",
-        paint: {
-          "fill-color": "#FF0000", // Red color for the fill
-          "fill-opacity": 0.05, // Adjust the opacity as needed
-        },
-      });
-    });
-
-    function openGoogleMaps(start, end) {
-      const url = `https://www.google.com/maps/dir/?api=1&origin=${start.lat},${start.lng}&destination=${end.lat},${end.lng}&travelmode=driving`;
-      window.open(url, "_blank");
-    }
-
-    function getDirections(destination, address) {
-      geolocateControl.once("geolocate", function (e) {
-        const startPoint = {
-          lat: e.coords.latitude,
-          lng: e.coords.longitude,
-        };
-        const url = `https://www.google.com/maps/dir/?api=1&origin=${startPoint.lat
-          },${startPoint.lng}&destination=${encodeURIComponent(
-            address
-          )}&travelmode=driving`;
-        window.open(url, "_blank");
-      });
-
-      // Fallback for geolocation failure
-      if (!geolocateControl.trigger()) {
-        console.warn("Geolocation failed. Defaulting to Goshen.");
-        // Default to Goshen coordinates
-        const url = `https://www.google.com/maps/dir/?api=1&origin=41.4026,-74.3231&destination=${encodeURIComponent(
-          address
-        )}&travelmode=driving`;
-        window.open(url, "_blank");
-      }
-    }
-
-    function reportOutOfStock(locationName) {
-      document.getElementById(
-        "form-location"
-      ).value = `The Naloxbox at ${locationName} is reported as out of stock.`;
-      document.getElementById("outOfStockForm").submit();
-      alert("Out of Stock report sent successfully.");
-    }
-
-    document
-      .getElementById("toggle-notes-button")
-      .addEventListener("click", function () {
-        var notesBox = document.getElementById("notes-box");
-        if (
-          notesBox.style.display === "none" ||
-          notesBox.style.display === ""
-        ) {
-          notesBox.style.display = "block";
-        } else {
-          notesBox.style.display = "none";
-        }
-      });
-
-    document
-      .getElementById("close-notes-button")
-      .addEventListener("click", function () {
-        document.getElementById("notes-box").style.display = "none";
-      });
-  </script>
+    <!-- Include Mapbox GL and Geocoder libraries -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+    <script
+        src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    <!-- Reference your external JS file -->
+    <script src="map.js"></script>
 </body>
 
 </html>

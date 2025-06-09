@@ -20,8 +20,10 @@ body, html {
   margin: 0;
 }
 
-.marker img {
+.marker lord-icon {
+  /* Example styles */
   display: block;
+  /* Any additional styles you need */
 }
 
 .marker {
@@ -40,7 +42,8 @@ body, html {
   color: #333;
   font-size: 14px;
   box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
-  width: 300px;
+  width: auto !important;
+  max-width: 420px !important;
   height: fit-content;
 }
 
@@ -58,6 +61,9 @@ body, html {
   padding: 10px;
   max-height: 300px;
   overflow-y: auto;
+  width: auto !important;
+  max-width: 420px !important;
+  overflow-x: hidden !important;
 }
 
 .mapboxgl-popup-content::-webkit-scrollbar {
@@ -111,7 +117,7 @@ body, html {
 
 #toggle-notes-button {
   position: absolute;
-  top: 7%; /* Adjust based on the search bar's height and margin */
+  top: 7%;
   left: 10px;
   padding: 3px;
   cursor: pointer;
@@ -125,15 +131,15 @@ body, html {
 
 #notes-box {
   position: absolute;
-  top: 60px; /* Adjust based on the search bar's height and margin */
+  top: 60px;
   left: 10px;
   background-color: white;
   padding: 10px;
   border: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 250px; /* Adjust based on desired width */
-  z-index: 1; /* Ensure it appears above the map */
-  display: none; /* Initially hidden */
+  width: 250px;
+  z-index: 1;
+  display: none;
 }
 
 #notes-box h3 {
@@ -156,8 +162,6 @@ body, html {
   color: #666;
 }
 
-/* Add these styles to your style.css */
-
 .popup-subheading {
   font-family: "Montserrat", sans-serif;
   font-size: 14px;
@@ -168,7 +172,7 @@ body, html {
 }
 
 .out-of-stock-button {
-  background-color: #f44336; /* Red color for the out of stock button */
+  background-color: #f44336;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -188,4 +192,473 @@ body, html {
 .out-of-stock-button:hover {
   background-color: #d32f2f;
   box-shadow: 0 4px 8px rgba(244, 67, 54, 0.7);
+}
+
+#legend {
+  position: absolute;
+  bottom: 20px;
+  left: 10px;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+#legend h4 {
+  margin: 0 0 5px;
+}
+
+#legend div {
+  margin-bottom: 5px;
+}
+
+/* Buttons Styling */
+#toggle-notes-button {
+  position: absolute;
+  left: 10px;
+  width: 150px;
+  padding: 6px 10px;
+  cursor: pointer;
+  color: white;
+  background-color: #4285f4;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(66, 133, 244, 0.5);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+#toggle-oopp-button
+{
+  position: absolute;
+  left: 10px;
+  width: 150px;
+  padding: 6px 10px;
+  cursor: pointer;
+  color: white;
+  background-color: #000000;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(66, 133, 244, 0.5);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+#toggle-additional-notes-button {
+  position: absolute;
+  left: 10px;
+  width: 150px;
+  padding: 6px 10px;
+  cursor: pointer;
+  color: white;
+  background-color: #ff0000;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(66, 133, 244, 0.5);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* Vertical alignment of buttons */
+#toggle-notes-button { top: 7%; }
+#toggle-oopp-button { top: calc(7% + 45px); }
+#toggle-additional-notes-button { top: calc(7% + 90px); }
+
+/* Information Boxes Styling */
+#oopp-box,
+#additional-notes-box {
+  position: absolute;
+  top: 120px;
+  left: 10px;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  z-index: 10;
+  display: none; /* Ensure hidden by default */
+}
+
+/* Close button styling */
+.close-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #333;
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  color: #666;
+}
+
+/* Modern Button Styles */
+.modern-button {
+    background: linear-gradient(135deg, #e83a30 0%, #ff6b6b 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.modern-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Modern Modal Styles */
+.modern-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-content {
+    padding: 24px;
+}
+
+.modal-header {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.modal-header h3 {
+    color: #333;
+    font-size: 24px;
+    margin: 0;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.info-section {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.info-section:hover {
+    background: #f0f2f5;
+    transform: translateX(4px);
+}
+
+.info-icon {
+    flex-shrink: 0;
+}
+
+.info-content {
+    flex-grow: 1;
+}
+
+.info-content h4 {
+    color: #333;
+    margin: 0 0 12px 0;
+    font-size: 18px;
+}
+
+.info-content ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.info-content li {
+    color: #666;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.feedback-section {
+    margin-top: 16px;
+    text-align: center;
+}
+
+.feedback-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #e83a30;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 8px;
+    background: #fff5f5;
+    transition: all 0.3s ease;
+}
+
+.feedback-link:hover {
+    background: #ffe5e5;
+    transform: translateY(-2px);
+}
+
+.close-button {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #666;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.close-button:hover {
+    background: #f0f0f0;
+    color: #333;
+}
+
+/* Add overlay when modal is open */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+}
+
+/* Override notes-box to use modern modal layout */
+#notes-box.modern-modal {
+    position: fixed;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    background: white !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+    z-index: 1001 !important;
+    max-width: 600px !important;
+    width: 90% !important;
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+}
+
+/* Override oopp-box to use modern modal layout */
+#oopp-box.modern-modal {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    background: white !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+    z-index: 1001 !important;
+    max-width: 600px !important;
+    width: 90% !important;
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+}
+
+/* Override additional-notes-box to use modern modal layout */
+#additional-notes-box.modern-modal {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    background: white !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+    z-index: 1001 !important;
+    max-width: 600px !important;
+    width: 90% !important;
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+}
+
+/* Button Color Overrides */
+#toggle-notes-button.modern-button {
+    /* Information button in blue */
+    background: linear-gradient(135deg, #4285f4 0%, #1e90ff 100%);
+}
+
+#toggle-oopp-button.modern-button {
+    /* OOPP button in black */
+    background: linear-gradient(135deg, #333333 0%, #000000 100%);
+}
+
+/* Ensure btn-text inside buttons have no extra whitespace issues */
+.modern-button .btn-text {
+    /* no additional margin needed: gap controls spacing */
+}
+
+/* Modern Mapbox Popup Styles */
+.popup-card {
+    font-family: 'Montserrat', sans-serif;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+    padding: 24px 28px 22px 28px;
+    min-width: 300px;
+    max-width: 420px;
+    color: #222;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.popup-card * {
+    box-sizing: border-box;
+}
+
+.popup-header {
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.popup-title-group {
+    display: block;
+    text-align: center;
+}
+
+.popup-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+    color: #222;
+    text-align: center;
+}
+
+.popup-type {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(90deg, #e83a30 0%, #ff6b6b 100%);
+    border-radius: 6px;
+    padding: 2px 10px;
+    display: inline-block;
+    margin-top: 8px;
+    text-align: center;
+}
+
+.popup-section {
+    margin-bottom: 10px;
+}
+
+.popup-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #888;
+    margin-bottom: 2px;
+}
+
+.popup-value {
+    font-size: 15px;
+    color: #222;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+.modern-popup-btn {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 10px;
+    padding: 10px 0;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #4285f4 0%, #1e90ff 100%);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(66,133,244,0.08);
+    letter-spacing: 0.5px;
+}
+
+.modern-popup-btn:hover {
+    background: linear-gradient(90deg, #1e90ff 0%, #4285f4 100%);
+    box-shadow: 0 4px 16px rgba(66,133,244,0.16);
+}
+
+.out-of-stock-button.modern-popup-btn {
+    background: linear-gradient(90deg, #e83a30 0%, #ff6b6b 100%);
+}
+
+.out-of-stock-button.modern-popup-btn:hover {
+    background: linear-gradient(90deg, #ff6b6b 0%, #e83a30 100%);
+}
+
+/* Popup dropdown (Hours) styles */
+.popup-dropdown {
+    margin-bottom: 12px;
+}
+.popup-summary {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    outline: none;
+    border: none;
+    background: none;
+    padding: 0;
+    color: #222;
+    list-style: none;
+}
+.popup-summary::-webkit-details-marker {
+    display: none;
+}
+.popup-summary::before {
+    content: "▶";
+    display: inline-block;
+    margin-right: 6px;
+    transition: transform 0.3s ease;
+}
+.popup-dropdown[open] .popup-summary::before {
+    transform: rotate(90deg);
+}
+.popup-dropdown .popup-value {
+    margin-top: 8px;
+    padding-left: 18px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Hours container styling in popups */
+.popup-hours-container {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+/* Address and Narcan location container styling in popups */
+.popup-address-container,
+.popup-narcan-container {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 8px;
 }

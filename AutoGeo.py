@@ -2,14 +2,6 @@ import pandas as pd
 import geojson
 import os
 
-# Load Excel File
-excel_file_path = "P:/1887Building/Epidemiology/Personal Folders/DQ/Projects/NaloxBoxMap/Locations File for Naloxbox.xlsx"
-df = pd.read_excel(excel_file_path)
-
-# Handle NaN values by filling them with empty strings
-df.fillna("", inplace=True)
-
-# Function to convert DataFrame to GeoJSON
 def dataframe_to_geojson(df, properties_columns, lat_col, lon_col):
     features = []
     for _, row in df.iterrows():
@@ -29,17 +21,36 @@ def dataframe_to_geojson(df, properties_columns, lat_col, lon_col):
 
     return geojson.FeatureCollection(features)
 
-# Define columns
-properties_columns = ['name', 'address', 'narcanlocation', 'hours']  # Replace with the actual column names
-lat_col = 'latitude'  # Replace with actual latitude column name
-lon_col = 'longitude'  # Replace with actual longitude column name
+def update_geojson_from_excel(excel_path, output_geojson_path, properties_columns, lat_col, lon_col, default_location_type=None):
+    df = pd.read_excel(excel_path)
+    df.fillna("", inplace=True)
+    
+    # For each expected property column, if it is missing, add it with a default value.
+    for col in properties_columns:
+        if col not in df.columns:
+            if col == "location_type" and default_location_type is not None:
+                df[col] = default_location_type
+            else:
+                df[col] = ""
+    
+    geojson_data = dataframe_to_geojson(df, properties_columns, lat_col, lon_col)
+    with open(output_geojson_path, "w") as f:
+        geojson.dump(geojson_data, f)
+    print(f"GeoJSON file '{output_geojson_path}' has been updated from '{excel_path}'.")
 
-# Create GeoJSON
-geojson_data = dataframe_to_geojson(df, properties_columns, lat_col, lon_col)
+if __name__ == "__main__":
+    # Define common settings
+    properties_columns = ['name', 'address', 'narcanlocation', 'hours', 'location_type']
+    lat_col = 'latitude'
+    lon_col = 'longitude'
 
-# Write to file
-geojson_file_path = "P:/1887Building/Epidemiology/Personal Folders/DQ/Projects/NaloxBoxMap/Extended_GeoJSON_Locations.geojson"
-with open(geojson_file_path, "w") as f:
-    geojson.dump(geojson_data, f)
+    # Update Naloxbox GeoJSON – default location_type "naloxbox"
+    nalox_excel = "P:/1887Building/Epidemiology/Personal Folders/DQ/Projects/NaloxBoxMap/Locations File for Naloxbox.xlsx"
+    nalox_geojson = "P:/1887Building/Epidemiology/Personal Folders/DQ/Projects/NaloxBoxMap/Extended_GeoJSON_Locations.geojson"
+    update_geojson_from_excel(nalox_excel, nalox_geojson, properties_columns, lat_col, lon_col, default_location_type="naloxbox")
 
-print("GeoJSON file has been updated.")
+    # Update OOPP Programs GeoJSON – default location_type "OPPP"
+    oppp_excel = "P:/1887Building/Epidemiology/Personal Folders/DQ/Projects/NaloxBoxMap/Locations File for OOPP Programs.xlsx"
+    oppp_geojson = "P:/1887Building/Epidemiology/Personal Folders/DQ/Projects/NaloxBoxMap/OOPP_Programs.geojson"
+    update_geojson_from_excel(oppp_excel, oppp_geojson, properties_columns, lat_col, lon_col, default_location_type="OPPP")
+

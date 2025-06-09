@@ -1,0 +1,260 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.420206,
+                    41.447468
+                ]
+            },
+            "properties": {
+                "name": "Access: Supports for Living",
+                "address": "Union Street, Middletown, NY 10940",
+                "narcanlocation": "",
+                "hours": "",
+                "location_type": "OOPP"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.680998,
+                    41.367366
+                ]
+            },
+            "properties": {
+                "name": "Bon Secours Community Hospital        ",
+                "address": "160 East Main Street Port Jervis , NY 12771",
+                "narcanlocation": "",
+                "hours": "",
+                "location_type": "OOPP"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.368318,
+                    41.442309
+                ]
+            },
+            "properties": {
+                "name": "Garnet Health Medical Center",
+                "address": "707 East Main Street Middletown, NY 10940",
+                "narcanlocation": "",
+                "hours": "",
+                "location_type": "OOPP"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.027305,
+                    41.4938
+                ]
+            },
+            "properties": {
+                "name": "Greater Hudson Valley Family Health Center for Recovery",
+                "address": "3 Commercial Place Newburgh , NY 12550",
+                "narcanlocation": "",
+                "hours": "",
+                "location_type": "OOPP"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.019778,
+                    41.501096
+                ]
+            },
+            "properties": {
+                "name": "Hudson Valley Community Services, Inc.",
+                "address": "280 Broadway 4th Floor Newburgh, NY 12550",
+                "narcanlocation": "",
+                "hours": "",
+                "location_type": "OOPP"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.364833,
+                    41.461678
+                ]
+            },
+            "properties": {
+                "name": "Alcohol and Drug Awareness Council of Orange County",
+                "address": "6 Wesley Ct., Suite 1 Middletown, NY 10941",
+                "narcanlocation": "",
+                "hours": "",
+                "location_type": "OOPP"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.014388,
+                    41.503408
+                ]
+            },
+            "properties": {
+                "name": "Montefiore St. Luke's Cornwall Hospital",
+                "address": "70 Dubois Street Newburgh, NY 12550",
+                "narcanlocation": "",
+                "hours": "",
+                "location_type": "OOPP"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.690629,
+                    41.376892
+                ]
+            },
+            "properties": {
+                "name": "Narrow Path Family Health NP P.C.",
+                "address": "158 Pike Street Port Jervis, NY 12771",
+                "narcanlocation": "",
+                "hours": "",
+                "location_type": "OOPP"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.43827,
+                    41.4486
+                ]
+            },
+            "properties": {
+                "name": "New York State Office of Alcoholism and Substance Abuse Services Richard C. Ward Addiction Treatment Center",
+                "address": "177 Seward Avenue Middletown, NY 10940",
+                "narcanlocation": "",
+                "hours": "",
+                "location_type": "OOPP"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.320089,
+                    41.389071
+                ]
+            },
+            "properties": {
+                "name": "Orange County Department of Mental Health",
+                "address": "30 Harriman Drive Goshen, NY 10924",
+                "narcanlocation": "",
+                "hours": "",
+                "location_type": "OOPP"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.023538,
+                    41.50017
+                ]
+            },
+            "properties": {
+                "name": "Osborne Association Newburgh",
+                "address": "388 Ann Street 2nd Floor Newburgh, NY 12550",
+                "narcanlocation": "",
+                "hours": "",
+                "location_type": "OOPP"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.413649,
+                    41.452846
+                ]
+            },
+            "properties": {
+                "name": "Regional Economic Community Action Program (RECAP)",
+                "address": "40 Smith Street Middletown, NY 10940",
+                "narcanlocation": "",
+                "hours": "",
+                "location_type": "OOPP"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.080317,
+                    41.544745
+                ]
+            },
+            "properties": {
+                "name": "Regional Economic Community Action Program Inc. (RECAP)",
+                "address": "127 Hickory Hill Road Newburgh, NY 12550",
+                "narcanlocation": "",
+                "hours": "",
+                "location_type": "OOPP"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.360063,
+                    41.445754
+                ]
+            },
+            "properties": {
+                "name": "Resource Recovery Center of Orange County",
+                "address": "68 Crystal Run Road Middletown, NY 10941",
+                "narcanlocation": "",
+                "hours": "",
+                "location_type": "OOPP"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.418109,
+                    41.448543
+                ]
+            },
+            "properties": {
+                "name": "Restorative Management Corp",
+                "address": "7 Railroad Avenue Middletown , NY 10940",
+                "narcanlocation": "",
+                "hours": "",
+                "location_type": "OOPP"
+            }
+        }
+    ]
+}
