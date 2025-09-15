@@ -14,13 +14,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Add controls
     map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
-    map.addControl(
-        new MapboxGeocoder({
-            accessToken: mapboxgl.accessToken,
-            mapboxgl: mapboxgl,
-        }),
-        "top-left"
-    );
+    const geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl,
+    });
+    map.addControl(geocoder, "top-left");
 
     const geolocateControl = new mapboxgl.GeolocateControl({
         positionOptions: { enableHighAccuracy: true },
@@ -80,6 +78,77 @@ document.addEventListener("DOMContentLoaded", function () {
     // Marker arrays
     const naloxMarkers = [];
     const opppMarkers = [];
+    const allLocations = [];
+    let currentOpenPopup = null;
+
+    // Haversine distance in miles
+    function haversineDistanceMiles(lat1, lon1, lat2, lon2) {
+        const toRad = (deg) => (deg * Math.PI) / 180;
+        const R = 3958.7613; // Earth radius in miles
+        const dLat = toRad(lat2 - lat1);
+        const dLon = toRad(lon2 - lon1);
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    }
+
+    function computeNearest(originLngLat, limit = 5) {
+        const [originLng, originLat] = originLngLat;
+        return allLocations
+            .map((loc) => {
+                const [lng, lat] = loc.coordinates;
+                const distance = haversineDistanceMiles(originLat, originLng, lat, lng);
+                return { ...loc, distance };
+            })
+            .sort((a, b) => a.distance - b.distance)
+            .slice(0, limit);
+    }
+
+    function renderNearestList(originLngLat) {
+        const nearest = computeNearest(originLngLat, 7);
+        const listEl = document.getElementById('nearest-list');
+        const originEl = document.getElementById('nearest-origin');
+        if (!listEl || !originEl) return;
+        originEl.textContent = `From: ${originLngLat[1].toFixed(5)}, ${originLngLat[0].toFixed(5)}`;
+        listEl.innerHTML = '';
+
+        nearest.forEach((loc) => {
+            const li = document.createElement('li');
+            li.className = 'nearest-item';
+            const miles = loc.distance.toFixed(2);
+            li.innerHTML = `
+                <div class="nearest-item-main">
+                    <div class="nearest-title">${loc.name} <span class="nearest-badge">${loc.type === 'OPPP' ? 'OOPP' : 'Naloxbox'}</span></div>
+                    <div class="nearest-sub">${loc.address || ''}</div>
+                </div>
+                <div class="nearest-meta">
+                    <div class="nearest-distance">${miles} mi</div>
+                    <button class="nearest-go">View</button>
+                </div>
+            `;
+            li.querySelector('.nearest-go').addEventListener('click', () => {
+                map.flyTo({ center: loc.coordinates, zoom: 14 });
+                const popup = loc.marker && loc.marker.getPopup ? loc.marker.getPopup() : null;
+                if (popup) {
+                    if (currentOpenPopup && currentOpenPopup !== popup) {
+                        currentOpenPopup.remove();
+                    }
+                    // Anchor and open this popup
+                    popup.setLngLat(loc.coordinates).addTo(map);
+                    currentOpenPopup = popup;
+                }
+            });
+            listEl.appendChild(li);
+        });
+
+        const modal = document.getElementById('nearest-modal');
+        if (modal) {
+            modal.style.display = 'block';
+        }
+    }
 
     // Popup content logic
     function createPopupHTML(feature) {
@@ -157,6 +226,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 
                 if (isOPPP) opppMarkers.push(marker);
                 else naloxMarkers.push(marker);
+
+                allLocations.push({
+                    type: isOPPP ? 'OPPP' : 'Naloxbox',
+                    name: feature.properties.name,
+                    address: feature.properties.address,
+                    coordinates: feature.geometry.coordinates,
+                    marker
+                });
             });
             updateMarkers();
         });
@@ -180,6 +257,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     .addTo(map);
 
                 opppMarkers.push(marker);
+
+                allLocations.push({
+                    type: 'OPPP',
+                    name: feature.properties.name,
+                    address: feature.properties.address,
+                    coordinates: feature.geometry.coordinates,
+                    marker
+                });
             });
             updateMarkers();
         });
@@ -246,6 +331,27 @@ document.addEventListener("DOMContentLoaded", function () {
     window.reportOutOfStock = function (locationName) {
         alert(`Reported: ${locationName} is out of stock.`);
     };
+
+    // Nearest modal wiring
+    const nearestModal = document.getElementById('nearest-modal');
+    const closeNearestButton = document.getElementById('close-nearest-button');
+    if (closeNearestButton) {
+        closeNearestButton.addEventListener('click', () => {
+            if (nearestModal) nearestModal.style.display = 'none';
+        });
+    }
+
+    // Hook geocoder and geolocate to show nearest
+    geocoder.on('result', (e) => {
+        if (!e || !e.result || !e.result.center) return;
+        const center = e.result.center; // [lng, lat]
+        renderNearestList(center);
+    });
+
+    geolocateControl.on('geolocate', (e) => {
+        const center = [e.coords.longitude, e.coords.latitude];
+        renderNearestList(center);
+    });
 
     // Information modal functionality
     const toggleNotesButton = document.getElementById('toggle-notes-button');

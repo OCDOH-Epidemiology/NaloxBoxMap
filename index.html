@@ -169,6 +169,20 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
     <script
         src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    
+    <!-- Nearest Locations Side Panel -->
+    <div id="nearest-modal" class="nearest-panel" style="display:none;">
+        <div class="modal-content">
+            <button id="close-nearest-button" class="close-button">&times;</button>
+            <div class="modal-header">
+                <h3>Nearest Locations</h3>
+            </div>
+            <div class="modal-body">
+                <div id="nearest-origin" class="nearest-origin"></div>
+                <ul id="nearest-list" class="nearest-list"></ul>
+            </div>
+        </div>
+    </div>
     <!-- Reference your external JS file -->
     <script src="map.js"></script>
 </body>

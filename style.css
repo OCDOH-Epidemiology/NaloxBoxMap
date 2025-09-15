@@ -496,6 +496,50 @@ body, html {
     overflow-y: auto !important;
 }
 
+/* Nearest modal list styles */
+.nearest-panel {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 320px;
+    max-height: calc(100vh - 20px);
+    overflow-y: auto;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    z-index: 1001;
+}
+.nearest-panel .modal-content { padding: 14px; }
+.nearest-panel .modal-header { margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #eee; }
+.nearest-origin { color: #666; font-size: 13px; margin-bottom: 8px; }
+.nearest-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.nearest-item { display: flex; justify-content: space-between; align-items: center; background: #f8f9fa; border-radius: 10px; padding: 10px 12px; }
+.nearest-item-main { max-width: 70%; }
+.nearest-title { font-weight: 700; color: #222; margin-bottom: 2px; font-size: 14px; }
+.nearest-sub { color: #666; font-size: 12px; }
+.nearest-meta { display: flex; align-items: center; gap: 8px; }
+.nearest-distance { font-weight: 700; color: #333; font-size: 13px; }
+.nearest-go { background: #4285f4; color: #fff; border: none; border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: 12px; }
+.nearest-go:hover { background: #1e90ff; }
+.nearest-badge { background: #e83a30; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 6px; margin-left: 6px; }
+
+/* Mobile adjustments for nearest panel */
+@media (max-width: 768px) {
+  .nearest-panel {
+    width: 82vw;
+    right: 8px;
+    left: auto;
+    top: auto;
+    bottom: 10px;
+    max-height: 42vh;
+  }
+  .nearest-panel .modal-content { padding: 10px; }
+  .nearest-title { font-size: 13px; }
+  .nearest-sub { font-size: 11px; }
+  .nearest-distance { font-size: 12px; }
+  .nearest-go { padding: 5px 8px; font-size: 11px; }
+}
+
 /* Button Color Overrides */
 #toggle-notes-button.modern-button {
     /* Information button in blue */
